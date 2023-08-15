@@ -1,19 +1,17 @@
-import { BrowserRouter } from 'react-router-dom';
-import { render, screen } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event/dist/types/setup';
+import { screen } from '@testing-library/react';
 import App from '../App';
 import renderWithRouter from '../renderWithRouter';
 
 describe('Teste o componente <Pokedex.tsx />', () => {
   it('Teste se a página contém um heading h2 com o texto Encountered Pokémon.', () => {
-    renderWithRouter(<App />, { route: '/' });
+    renderWithRouter(<App />);
     const about = /Encountered Pokémon/i;
     expect(screen.getByRole('heading', { name: about })).toBeInTheDocument();
   });
 
   // ----------------------------------------------------------------------------------------------------------------------------
   it('Teste se é exibido o próximo Pokémon da lista quando o botão Próximo Pokémon é clicado', async () => {
-    const { user } = renderWithRouter(<App />, { route: '/' });
+    const { user } = renderWithRouter(<App />);
 
     const pokemonName = screen.getByTestId('pokemon-name');
     expect(pokemonName).toBeInTheDocument();
@@ -31,6 +29,14 @@ describe('Teste o componente <Pokedex.tsx />', () => {
     expect(pokemonName.textContent).toBe('Alakazam');
     await user.click(buttonList);
     expect(pokemonName.textContent).toBe('Mew');
+    await user.click(buttonList);
+    expect(pokemonName.textContent).toBe('Rapidash');
+    await user.click(buttonList);
+    expect(pokemonName.textContent).toBe('Snorlax');
+    await user.click(buttonList);
+    expect(pokemonName.textContent).toBe('Dragonair');
+    await user.click(buttonList);
+    expect(pokemonName.textContent).toBe('Pikachu');
   });
 
   // ----------------------------------------------------------------------------------------------------------------------------
@@ -50,11 +56,15 @@ describe('Teste o componente <Pokedex.tsx />', () => {
 
   // ----------------------------------------------------------------------------------------------------------------------------
   it('Teste se a Pokédex contém um botão para resetar o filtro', async () => {
-    const { user } = renderWithRouter(<App />, { route: '/' });
-    const reseteButton = screen.getByRole('button', { name: /All/i });
-    expect(reseteButton).toBeInTheDocument();
+    const { user } = renderWithRouter(<App />);
+    const reseteButton = screen.getByRole('button', { name: /all/i });
+
+    const testFire = screen.getByRole('button', { name: /fire/i });
+    expect(testFire).toBeInTheDocument();
+    await user.click(testFire);
+    const fireName = screen.getByText(/charmander/i);
+    expect(fireName).toBeInTheDocument();
+
     await user.click(reseteButton);
-    const buttonList = /Próximo Pokémon/i;
-    expect(screen.getByRole('button', { name: buttonList })).toBeInTheDocument();
   });
 });
