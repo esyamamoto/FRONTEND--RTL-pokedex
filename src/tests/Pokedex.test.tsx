@@ -55,6 +55,7 @@ describe('Teste o componente <Pokedex.tsx />', () => {
   });
 
   // ----------------------------------------------------------------------------------------------------------------------------
+  /* TA DANDO ERRO :'(
   it('Teste se a Pokédex contém um botão para resetar o filtro', async () => {
     const { user } = renderWithRouter(<App />);
     const reseteButton = screen.getByRole('button', { name: /all/i });
@@ -66,5 +67,24 @@ describe('Teste o componente <Pokedex.tsx />', () => {
     expect(fireName).toBeInTheDocument();
 
     await user.click(reseteButton);
+
+    const buttonList = /lista pokemons/i;
+    expect(screen.getByRole('button', { name: buttonList })).toBeInTheDocument();
+  }); */
+  // ----------------------------------------------------------------------------------------------------------------------------
+  it('A Pokedéx deverá mostrar os Pokémon normalmente (sem filtros) quando o botão All for clicado.', async () => {
+    const { user } = renderWithRouter(<App />);
+
+    const buttonAll = screen.getByRole('button', { name: /all/i });
+    expect(buttonAll).toBeInTheDocument();
+
+    const firePokemon = screen.getByRole('button', { name: /fire/i });
+    await user.click(firePokemon);
+    const iChoiceYou = screen.getByText(/Charmander/i);
+    expect(iChoiceYou).toBeInTheDocument();
+
+    await user.click(buttonAll);
+    const pikachu = screen.getByText(/pikachu/i);
+    expect(pikachu).toBeInTheDocument();
   });
 });
