@@ -1,29 +1,29 @@
 import { screen } from '@testing-library/react';
-import App from '../App';
+import FavoritePokemon from '../pages/FavoritePokemon/FavoritePokemon';
 import renderWithRouter from '../renderWithRouter';
+import App from '../App';
 
 describe(' Teste o componente <FavoritePokemon.tsx />', () => {
-  it('É exibido na tela a mensagem No favorite pokemon found', async () => {
-    renderWithRouter(<App />);
-    const notFound = screen.getByText('No favorite pokemon found');
+  it('É exibido na tela a mensagem No favorite pokemon found', () => {
+    renderWithRouter(<FavoritePokemon />);
+
+    const notFound = screen.getByText(/no favorite pokémon found/i);
     expect(notFound).toBeInTheDocument();
   });
 
   // ----------------------------------------------------------------------------------------------------------------------------
-
   it('São exibidos na tela apenas os Pokémon favoritados', async () => {
     const { user } = renderWithRouter(<App />);
 
-    const favoritePokemonList = screen.getByRole('link', { name: 'More Details/i' });
-    await user.click(favoritePokemonList);
+    const favoriteList = screen.getByRole('link', { name: /more details/i });
+    await user.click(favoriteList);
 
-    const favorite = screen.getByText(/Pokémons favoritados?/i);
-    await user.click(favorite);
+    const favoritePokemon = screen.getByText(/pokémon favoritado\?/i);
+    await user.click(favoritePokemon);
+    expect(favoritePokemon).toBeInTheDocument();
 
-    const linkFavorite = screen.getByRole('link', { name: /favorite pokemon/i });
+    const linkFavorite = screen.getByRole('link', { name: /favorite pokémon/i });
     await user.click(linkFavorite);
-
-    const favoriteList = await screen.findByRole('link', { name: 'More Details' });
-    expect(favoriteList).toBeInTheDocument();
+    expect(screen.getByText(/pikachu/i)).toBeInTheDocument();
   });
 });
