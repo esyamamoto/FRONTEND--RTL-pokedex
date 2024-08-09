@@ -25,6 +25,7 @@ function PageRoutes() {
   };
 
   const favoritePokemonList = pokemonList.filter(({ id }) => favoritePokemonIdsObj[id]);
+
   return (
     <Routes>
       <Route
@@ -50,8 +51,14 @@ function PageRoutes() {
         path="/favorites"
         element={ <FavoritePokemon pokemonList={ favoritePokemonList } /> }
       />
-      <Route path="/about" Component={ About } />
-      <Route path="*" Component={ NotFound } />
+      <Route
+        path="/about"
+        element={ <About /> }
+      />
+      <Route
+        path="*"
+        element={ <NotFound /> }
+      />
     </Routes>
   );
 }

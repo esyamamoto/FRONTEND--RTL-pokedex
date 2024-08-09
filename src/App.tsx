@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
-
 import PageRoutes from './routes';
-
 import './App.css';
 
 function App() {

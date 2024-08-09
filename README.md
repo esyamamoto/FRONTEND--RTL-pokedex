@@ -40,3 +40,10 @@ Orientacoes
   npx stryker run ./stryker/nomeDoArquivo.conf.json
   ```
 </details>
+<details>
+<summary>ROdar localmente</summary>
+  - para testá-lo individualmente, execute o comando a seguir.
+  ```bash
+  npm run dev
+  ```
+</details>

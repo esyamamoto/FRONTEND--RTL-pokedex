@@ -8,8 +8,5 @@ import { About, FavoritePokemon, NotFound } from './pages';
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <BrowserRouter>
     <App />
-    <About />
-    <FavoritePokemon />
-    <NotFound />
   </BrowserRouter>,
 );
